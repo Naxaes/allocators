@@ -1,0 +1,17 @@
+Nice comments on this video: https://youtu.be/Ij7NQ-0mIVA
+* Let me explain briefly: suppose your list has size 10 and grows to size 20, and suppose that the new memory chunk is allocated immediately after the previous
+memory chunk. Later you grow to size 40, again allocating a memory chunk immediately after the one of size 20. So the memory chunks "crawl forward" to higher
+and higher addresses, in theory using up all available addresses. You might find that at some point it is a good idea to instead of always allocating after the
+previous chunk, you could place your new chunk back at the start where the size 10 chunk has been initially. After all, you know that there is a lot of free
+memory behind that one now, namely the previous memory used for the chunks of size 20, 40, 80, ... . However, by the nature of powers of 2 you will find that
+the cumulative memory used by all previous chunks is never enough to store the new chunk. One can show that this can be avoided by growing by a smaller factor
+each time, namely at most x, where x is the root of x^3=1+x
+* It is better to shrink you array in half only when it drops to 1/4 of its max size
+* Factors between 1.01 and 1.32 allow memory re-use about 33% of the time.
+  Factors between 1.33 and 1.46 allow memory re-use about 25% of the time.
+  Factors between 1.47 and 1.53 allow memory re-use about 20% of the time.
+  Factors between 1.54 and 1.57 allow memory re-use about 16% of the time.
+  Factors 1.58 and 1.59 allow memory re-use about 14% of the time.
+  Factor 1.60 allows memory re-use about 13% of the time.
+  Factor 1.61 allows memory re-use about 10% of the time.
+  Factor from 1.62 and above NEVER allow memory re-use.
